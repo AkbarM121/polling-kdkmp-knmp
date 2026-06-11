@@ -108,7 +108,7 @@ async function tampilkanHasil(){
 }
 
 fetch(
-"https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json"
+"https://ibnux.github.io/data-indonesia/provinsi.json"
 )
 .then(res=>res.json())
 .then(data=>{
@@ -119,8 +119,7 @@ const option =
 document.createElement("option");
 
 option.value = item.id;
-
-option.textContent = item.name;
+option.textContent = item.nama;
 
 provinsiSelect.appendChild(option);
 
@@ -139,7 +138,9 @@ kabupatenSelect.innerHTML =
 '<option value="">Pilih Kabupaten/Kota</option>';
 
 fetch(
-`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${idProvinsi}.json`
+"https://ibnux.github.io/data-indonesia/kabupaten/" +
+idProvinsi +
+".json"
 )
 .then(res=>res.json())
 .then(data=>{
@@ -149,9 +150,8 @@ data.forEach(item=>{
 const option =
 document.createElement("option");
 
-option.value = item.name;
-
-option.textContent = item.name;
+option.value = item.nama;
+option.textContent = item.nama;
 
 kabupatenSelect.appendChild(option);
 
