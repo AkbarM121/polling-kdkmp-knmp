@@ -37,7 +37,7 @@ voteBtn.addEventListener("click", async () => {
   }
 
   await addDoc(
-    collection(db,"polling"),
+    collection(db, "hasilPolling"),
     {
       wilayah: wilayah,
       waktu: new Date()
