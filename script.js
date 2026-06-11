@@ -1,104 +1,53 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+fetch(
+"https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json"
+)
+.then(res=>res.json())
+.then(data=>{
 
-import {
-getFirestore,
-collection,
-addDoc,
-getDocs
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+data.forEach(item=>{
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDQd4rwZVkUvT0c5ojkm_8e6TQC2MZ0H0U",
-  authDomain: "pemetaan-kdkmp-knmp-nasional.firebaseapp.com",
-  projectId: "pemetaan-kdkmp-knmp-nasional",
-  storageBucket: "pemetaan-kdkmp-knmp-nasional.firebasestorage.app",
-  messagingSenderId: "451783790192",
-  appId: "1:451783790192:web:aa1cc32735fe32bdf06eb5"
-};
+const option =
+document.createElement("option");
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+option.value = item.id;
 
-const voteBtn = document.getElementById("voteBtn");
+option.textContent = item.name;
 
-voteBtn.addEventListener("click", async () => {
-
-  const wilayah =
-  document.getElementById("wilayah").value;
-
-  if(!wilayah){
-    alert("Masukkan Kabupaten/Kota");
-    return;
-  }
-
-  if(localStorage.getItem("sudahVote")){
-    alert("Anda sudah memilih");
-    return;
-  }
-
-  await addDoc(
-    collection(db, "hasilPolling"),
-    {
-      wilayah: wilayah,
-      waktu: new Date()
-    }
-  );
-
-  localStorage.setItem(
-    "sudahVote",
-    "ya"
-  );
-
-  alert("Terima kasih");
-
-  tampilkanHasil();
+provinsiSelect.appendChild(option);
 
 });
 
-async function tampilkanHasil(){
+});
 
-  const hasil =
-  document.getElementById("hasil");
+provinsiSelect.addEventListener(
+"change",
+function(){
 
-  hasil.innerHTML = "";
+const idProvinsi =
+this.value;
 
-  const snapshot =
-  await getDocs(
-    collection(db,"hasilPolling")
-  );
+kabupatenSelect.innerHTML =
+'<option value="">Pilih Kabupaten/Kota</option>';
 
-  let ranking = {};
+fetch(
+`https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${idProvinsi}.json`
+)
+.then(res=>res.json())
+.then(data=>{
 
-  snapshot.forEach((doc)=>{
+data.forEach(item=>{
 
-    const wilayah =
-    doc.data().wilayah;
+const option =
+document.createElement("option");
 
-    if(!ranking[wilayah]){
+option.value = item.name;
 
-      ranking[wilayah]=0;
+option.textContent = item.name;
 
-    }
+kabupatenSelect.appendChild(option);
 
-    ranking[wilayah]++;
+});
 
-  });
+});
 
-  const data =
-  Object.entries(ranking)
-  .sort((a,b)=>b[1]-a[1]);
-
-  data.forEach((item,index)=>{
-
-    hasil.innerHTML += `
-      <div class="rank">
-      ${index+1}. ${item[0]}
-      (${item[1]} suara)
-      </div>
-    `;
-
-  });
-
-}
-
-tampilkanHasil();
+});
