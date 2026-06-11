@@ -61,7 +61,7 @@ voteBtn.addEventListener("click", async () => {
 
 });
 
-async function tampilkanHasil(){
+async function tampilkanHasil() {
 
   const hasil =
   document.getElementById("hasil");
@@ -70,20 +70,18 @@ async function tampilkanHasil(){
 
   const snapshot =
   await getDocs(
-    collection(db,"hasilPolling")
+    collection(db, "hasilPolling")
   );
 
   let ranking = {};
 
-  snapshot.forEach((doc)=>{
+  snapshot.forEach((doc) => {
 
     const wilayah =
     doc.data().wilayah;
 
-    if(!ranking[wilayah]){
-
-      ranking[wilayah]=0;
-
+    if (!ranking[wilayah]) {
+      ranking[wilayah] = 0;
     }
 
     ranking[wilayah]++;
@@ -92,17 +90,38 @@ async function tampilkanHasil(){
 
   const data =
   Object.entries(ranking)
-  .sort((a,b)=>b[1]-a[1]);
+  .sort((a, b) => b[1] - a[1]);
 
-  data.forEach((item,index)=>{
+  const maxSuara =
+  Math.max(...data.map(item => item[1]), 1);
+
+  data.forEach((item, index) => {
+
+    const persen =
+    (item[1] / maxSuara) * 100;
 
     hasil.innerHTML += `
-      <div class="rank">
-      ${index+1}. ${item[0]}
-      (${item[1]} suara)
+      <div class="rank-card">
+
+        <div class="rank-header">
+          <span>
+            ${index + 1}. ${item[0]}
+          </span>
+
+          <strong>
+            ${item[1]} suara
+          </strong>
+        </div>
+
+        <div class="bar-container">
+          <div
+            class="bar"
+            style="width:${persen}%">
+          </div>
+        </div>
+
       </div>
     `;
-
   });
 
 }
