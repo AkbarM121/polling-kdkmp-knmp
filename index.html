@@ -1,44 +1,75 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pemetaan KDKMP-KNMP Nasional</title>
 
-<title>Pemetaan KDKMP-KNMP</title>
+  <link rel="stylesheet" href="style.css">
 
-<link rel="stylesheet" href="style.css">
-
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body>
 
-<div class="container">
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo-container">
+      <img src="logokdkmp.png" alt="Logo KDKMP" class="logo">
+      <div>
+        <h1>Pemetaan KDKMP-KNMP Nasional</h1>
+        <p class="subtitle">
+          Koperasi Desa/Kelurahan Merah Putih Nasional
+        </p>
+      </div>
+    </div>
+  </header>
 
-<h1>Pemetaan KDKMP-KNMP Nasional</h1>
+  <!-- CONTAINER -->
+  <div class="container">
 
-<p>Pilih Provinsi Domisili Anda</p>
+    <div class="card">
 
-<select id="provinsi">
-<option value="">-- Pilih Provinsi --</option>
-</select>
+      <h2>Pilih Domisili Anda</h2>
 
-<p>Pilih Kabupaten/Kota Domisili Anda</p>
+      <label>Provinsi</label>
+      <select id="provinsi">
+        <option value="">Pilih Provinsi</option>
+      </select>
 
-<select id="kabupaten">
-<option value="">-- Pilih Kabupaten/Kota --</option>
-</select>
+      <label>Kabupaten / Kota</label>
+      <select id="kabupaten">
+        <option value="">Pilih Kabupaten/Kota</option>
+      </select>
 
-<button id="voteBtn">
-Kirim
-</button>
+      <button id="voteBtn">
+        Kirim Data
+      </button>
 
-<h2>Hasil Nasional</h2>
+    </div>
 
-<div id="hasil"></div>
+    <!-- HASIL -->
+    <div class="hasil-card">
 
-</div>
+      <h2>📊 Hasil Nasional</h2>
 
-<script type="module" src="script.js"></script>
+      <canvas id="chartHasil"></canvas>
+
+      <div id="hasil"></div>
+
+    </div>
+
+  </div>
+
+  <!-- TEXT BERJALAN -->
+  <div class="marquee">
+    <marquee behavior="scroll" direction="left">
+      🇮🇩 Selamat Datang di Sistem Pemetaan KDKMP-KNMP Nasional •
+      Koperasi Desa/Kelurahan Merah Putih •
+      Bersama Membangun Ekonomi Kerakyatan Indonesia 🇮🇩
+    </marquee>
+  </div>
+
+  <script type="module" src="script.js"></script>
 
 </body>
 </html>
