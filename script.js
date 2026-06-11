@@ -64,7 +64,7 @@ async function tampilkanHasil(){
 
   const snapshot =
   await getDocs(
-    collection(db,"polling")
+    collection(db,"hasilPolling")
   );
 
   let ranking = {};
